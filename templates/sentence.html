@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+  <head>
+<style> 
+#Progress_Status { 
+  visibility:hidden;
+  width: 100%; 
+  background-color: grey; 
+} 
+#myprogressBar { 
+  visibility:hidden;
+  width: 0%; 
+  height: 30px;
+  background-color: green; 
+} 
+</style> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,700,900" rel="stylesheet">
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+    <title>NLP Project</title>
+<!--
+NLP Project
+-->
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css'%}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css'%}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fullpage.min.css'%}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl.carousel.css'%}">
+
+    <link rel="stylesheet" href="{% static 'css/animate.css'%}">
+
+    <link rel="stylesheet" href="{% static 'css/templatemo-style.css'%}">
+
+    <link rel="stylesheet" href="{% static 'css/responsive.css'%}">
+
+    </head>
+    
+    <body>
+    {% load static %}
+    <div id="video">
+        <div class="preloader">
+            <div class="preloader-bounce">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <header id="header">
+            <div class="container-fluid">
+                <div class="navbar">
+                    <a href="#" id="logo" title="BTPS">
+                        NLP Project
+                    </a>
+                    <div class="navigation-row">
+                        <nav id="navigation">
+                            <button type="button" class="navbar-toggle"> <i class="fa fa-bars"></i> </button>
+                            <div class="nav-box navbar-collapse">
+                            <a href="{% url 'modules' %}" style="font-weight:bold;">Back</a>
+                            </div>
+                         </nav>
+                </div>
+            </div>
+            </header>
+            <div id="fullpage" class="fullpage-default">
+         
+                <div class="section animated-row" data-section="slide01">
+                    <div class="section-inner">
+                        <div class="welcome-box">
+                            <div class="col-md-8 offset-md-2">
+                                <form method="POST" action="/sentence/">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                <label style="font-size:40px;">Enter your First Message :</label>
+                                <input type="text" class="form-control form-control-lg" name="sen1" style="border:2px solid white;" aria-describedby="emailHelp" placeholder="Enter Your Message . . . . . .">
+                                 <label style="font-size:40px;">Enter your Second Message :</label>
+                                <input type="text" class="form-control form-control-lg" name="sen2" style="border:2px solid white;" aria-describedby="emailHelp" placeholder="Enter Your Message . . . . . .">
+                                <button type="submit" class="btn btn-primary" style="color:#00ace6;">Submit</button>
+                                </div>
+                                </form>
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading" style="color:green;">Well done!</h4>
+                     <div id="Progress_Status"> 
+                      <div id="myprogressBar"><span id="s" class="text-center" style="color:white;"></span></div> 
+                      </div>
+                    {%if final_similarity > 0.0%}<p style="color:black;font-weight:bold;">
+                    {{'FINAL Similarity :'}} {{final_similarity}}</p><button onclick="up()" class="btn btn-outline-danger">See Your Result</button>
+                    {%endif%}
+                </div>
+                <small id="emailHelp" class="form-text" style="color:white;">Similarity is basis of the Universe.</small> 
+            </div>
+             
+                    </div>
+                </div>
+            </div>
+            </div>
+        
+
+        <video autoplay muted loop id="myVideo">
+          <source src="{% static 'images/video-bg.mp4'%}" type="video/mp4">
+        </video>
+
+    </div>  
+            
+
+    <script src="{% static 'js/jquery.js'%}"></script>
+
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+
+    <script src="{% static 'js/fullpage.min.js'%}"></script>
+
+    <script src="{% static 'js/scrolloverflow.js'%}"></script>
+
+    <script src="{% static 'js/owl.carousel.min.js'%}"></script>
+
+    <script src="{% static 'js/jquery.inview.min.js'%}"></script>
+
+    <script src="{% static 'js/form.js'%}"></script>
+
+    <script src="{% static 'js/custom.js'%}"></script>
+    <script> 
+    function up() { 
+    var element = document.getElementById("myprogressBar");
+    var p ={{final_similarity}};
+    var s = document.getElementById("s");
+    var element1 = document.getElementById("Progress_Status");
+    element.style.visibility = "visible";
+    element1.style.visibility = "visible"; 
+    var width = 1; 
+    var identity = setInterval(scene, 10); 
+    function scene() {
+    if(p < 40)
+     {
+     s.style.visibility = "visible"; 
+     s.innerHTML="Not Similar"}
+    else if (p>40 && p<60)
+    { 
+     s.style.visibility = "visible"; 
+     s.innerHTML="Similar";}
+    else if (p>60)
+    { 
+    s.style.visibility = "visible"; 
+    s.innerHTML="Identitical";}
+    if (width >= p) { 
+      clearInterval(identity); 
+    } else { 
+      width++;  
+      element.style.width = width + '%';  
+    } 
+  } 
+} 
+</script>
+  </body>
+</html>
